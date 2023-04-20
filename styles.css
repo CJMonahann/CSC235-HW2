@@ -32,7 +32,8 @@ td.c1 {
 td.c2 {
     width: 8%;
     text-align: left;
-    border-style: groove;
+    border: 1px white;
+    border-style: outset;
     background-color: #1919C8;
 }
 
@@ -46,10 +47,13 @@ button.b1 {
     font-size: 20px;
     background-color: #1919C8;
     color: white;
+    border: outset 1px white;
 }
 
 button.b2 {
     font-family: 'Times New Roman', Times, serif;
     font-size: 20px;
     background-color: darkgray;
+    color: #1919C8;
+    border: outset 1px white;
 }
