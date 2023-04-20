@@ -38,5 +38,18 @@ td.c2 {
 
 td.c3 {
     width: 60%;
-    text-align: right;
+    text-align: center;
+}
+
+button.b1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    background-color: #1919C8;
+    color: white;
+}
+
+button.b2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    background-color: darkgray;
 }

@@ -2,7 +2,7 @@
 <!--	Name: Cornelius Monahan
 		Course:	  235.01
 		Homework: #2
-		Git-Hub: 
+		Git-Hub: https://github.com/CJMonahann/CSC235-HW2.git
   -->
 <html>
 <head>
@@ -10,21 +10,37 @@
     <link rel = "StyleSheet" type = "text/css" href = "styles.css">
 </head>
 <body>
+    <script>
+    <!--
+        function roll() {
+            var ID = "d0"
+            //iterate through dice images to chnage all images
+            for(var i = 0; i <= 5; i++) {
+                var dice = document.getElementById(ID); //collect needed image per iteration
+                var num = Math.floor(6 * Math.random()) + 1; //collect random number
+                dice.src = "pix/dice" + num + ".gif"; //change image src to the random dice image
+                ID = "d" + i; //change ID string to retrieve next image
+            }
+        }
+    //-->
+    </script>
     <h1> Yahtzee </h1>
     <div>
-        <img src = "pix\dice0.gif" alt = "dice 0">
-        <img src = "pix\dice0.gif" alt = "dice 0">
-        <img src = "pix\dice0.gif" alt = "dice 0">
-        <img src = "pix\dice0.gif" alt = "dice 0">
-        <img src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d0" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d1" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d2" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d3" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d4" src = "pix\dice0.gif" alt = "dice 0">
     </div>
     <table>
-        <tr> <td class = "c1"> 1's </td> <td class = "c2"></td> <td class = "c3" rowspan = "5"></td> </tr>
+        <tr> <td class = "c1"> 1's </td> <td class = "c2"></td> 
+            <td class = "c3" rowspan = "5"><button onClick = "roll()" class = "b1">Roll</button></td> </tr>
         <tr> <td class = "c1"> 2's </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1"> 3's </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1"> 4's </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1"> 5's </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 6's </td> <td class = "c2"></td> <td class = "c3" rowspan = "5"></td> </tr>
+        <tr> <td class = "c1"> 6's </td> <td class = "c2"></td> 
+            <td class = "c3" rowspan = "5"><button class = "b2">New game</button></td> </tr>
         <tr> <td class = "c1"> 3 of a kind </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1"> 4 of a kind </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1" > Yahtzee </td> <td class = "c2"></td> </tr>
