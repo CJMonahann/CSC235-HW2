@@ -32,9 +32,8 @@ td.c1 {
 td.c2 {
     width: 8%;
     text-align: left;
-    border: 1px white;
-    border-style: outset;
     background-color: #1919C8;
+    border: outset 1px white;
 }
 
 td.c3 {
