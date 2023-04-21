@@ -12,34 +12,60 @@
 <body>
     <script>
     <!--
+        var numArr = new Array(0,0,0,0,0); //records rolled dice values
+        var numBool = new Array(false,false,false,false,false) //records boolean status of dice color
+                                                               //false = blue, true = purple
         function roll() {
-            var ID = "d0"
-            //iterate through dice images to chnage all images
-            for(var i = 0; i <= 5; i++) {
-                var dice = document.getElementById(ID); //collect needed image per iteration
-                var num = Math.floor(6 * Math.random()) + 1; //collect random number
-                dice.src = "pix/dice" + num + ".gif"; //change image src to the random dice image
-                ID = "d" + i; //change ID string to retrieve next image
+            for(var i = 0; i < 5; i++) {
+                if(!numBool[i]) { //when image not purple status, dice can be rolled
+                    var dice = document.getElementById("d" + i);
+                    numArr[i] = Math.floor(6 * Math.random()) + 1; //collect random number
+                    dice.src = "pix/dice" + numArr[i] + ".gif"; //change image src to the random dice image
+                }
             }
+        }
+        function block(i) {
+            var dice = document.getElementById("d" + i);
+            numBool[i] = !numBool[i] //change blue status to purple status
+            if(numBool[i]) { //when dice is purple status, change to purple image
+                dice.src = "pix/diceX" + numArr[i] + ".gif";
+            }
+            else { //when dice is blue status, change image to blue
+                dice.src = "pix/dice" + numArr[i] + ".gif";
+            }
+        }
+        function score(n) {
+            var td = document.getElementById("t" + n);
+            var total = 0;
+            for(var i = 0; i < 5; i++) {
+                if(numArr[i] == n) {
+                    total++;
+                }
+            }
+            td.innerHTML = total; //change <td> inner html to show current score
+        }
+        function empty(n) {
+            var td = document.getElementById("t" + n);
+            td.innerHTML = null; //change td from number to null so that box appears empty again
         }
     //-->
     </script>
     <h1> Yahtzee </h1>
     <div>
-        <img id = "d0" src = "pix\dice0.gif" alt = "dice 0">
-        <img id = "d1" src = "pix\dice0.gif" alt = "dice 0">
-        <img id = "d2" src = "pix\dice0.gif" alt = "dice 0">
-        <img id = "d3" src = "pix\dice0.gif" alt = "dice 0">
-        <img id = "d4" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d0" onClick = "block(0)" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d1" onClick = "block(1)" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d2" onClick = "block(2)" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d3" onClick = "block(3)" src = "pix\dice0.gif" alt = "dice 0">
+        <img id = "d4" onClick = "block(4)" src = "pix\dice0.gif" alt = "dice 0">
     </div>
     <table>
-        <tr> <td class = "c1"> 1's </td> <td class = "c2"></td> 
+        <tr> <td class = "c1"> 1's </td> <td ID = "t1" onMouseOver= "score(1)" onMouseOut = "empty(1)" class = "c2"></td> 
             <td class = "c3" rowspan = "5"><button onClick = "roll()" class = "b1">Roll</button></td> </tr>
-        <tr> <td class = "c1"> 2's </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 3's </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 4's </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 5's </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 6's </td> <td class = "c2"></td> 
+        <tr> <td class = "c1"> 2's </td> <td ID = "t2" onMouseOver= "score(2)" onMouseOut = "empty(2)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 3's </td> <td ID = "t3" onMouseOver= "score(3)" onMouseOut = "empty(3)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 4's </td> <td ID = "t4" onMouseOver= "score(4)" onMouseOut = "empty(4)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 5's </td> <td ID = "t5" onMouseOver= "score(5)" onMouseOut = "empty(5)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 6's </td> <td ID = "t6" onMouseOver= "score(6)" onMouseOut = "empty(6)" class = "c2"></td> 
             <td class = "c3" rowspan = "5"><button class = "b2">New game</button></td> </tr>
         <tr> <td class = "c1"> 3 of a kind </td> <td class = "c2"></td> </tr>
         <tr> <td class = "c1"> 4 of a kind </td> <td class = "c2"></td> </tr>
