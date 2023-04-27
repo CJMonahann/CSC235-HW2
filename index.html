@@ -15,13 +15,20 @@
         var numArr = new Array(0,0,0,0,0); //records rolled dice values
         var numBool = new Array(false,false,false,false,false) //records boolean status of dice color
                                                                //false = blue, true = purple
+        var numFreq = new Array(0,0,0,0,0,0,0);
+        var numRoll = 0;
         function roll() {
-            for(var i = 0; i < 5; i++) {
-                if(!numBool[i]) { //when image not purple status, dice can be rolled
+            if (numRoll < 3) { //allows roll button functionality for only three times
+                numFreq[1]=numFreq[2]=numFreq[3]=numFreq[4]=numFreq[5]=numFreq[6]=0;
+                for(var i = 0; i < 5; i++) {
+                    if(!numBool[i]) { //when image not purple status, dice can be rolled
                     var dice = document.getElementById("d" + i);
                     numArr[i] = Math.floor(6 * Math.random()) + 1; //collect random number
                     dice.src = "pix/dice" + numArr[i] + ".gif"; //change image src to the random dice image
                 }
+                numFreq[numArr[i]]++;
+            }
+            numRoll++;
             }
         }
         function block(i) {
@@ -36,17 +43,31 @@
         }
         function score(n) {
             var td = document.getElementById("t" + n);
-            var total = 0;
-            for(var i = 0; i < 5; i++) {
-                if(numArr[i] == n) {
-                    total++;
-                }
-            }
-            td.innerHTML = total; //change <td> inner html to show current score
+            td.innerHTML = numFreq[n] * n;
         }
         function empty(n) {
             var td = document.getElementById("t" + n);
             td.innerHTML = null; //change td from number to null so that box appears empty again
+        }
+        function kind(n,v) {
+            var td = document.getElementById("t" + n);
+            for(var i = 0; i < numFreq.length; i++) {
+                if(numFreq[i] >= v) {
+                    td.innerHTML = numArr[i] * v;
+                }
+            }
+        }
+        function newGame() {
+            //reset all global variables for the game
+            numArr = [0,0,0,0,0];
+            numBool = [false,false,false,false,false];
+            numFreq = [0,0,0,0,0,0,0];
+            numRoll = 0;
+            //return all dice images to original image
+            for(var i = 0; i <= 4; i++) {
+                var dice = document.getElementById("d" + i);
+                dice.src = "pix/dice0.gif";
+            }
         }
     //-->
     </script>
@@ -66,10 +87,10 @@
         <tr> <td class = "c1"> 4's </td> <td ID = "t4" onMouseOver= "score(4)" onMouseOut = "empty(4)" class = "c2"></td> </tr>
         <tr> <td class = "c1"> 5's </td> <td ID = "t5" onMouseOver= "score(5)" onMouseOut = "empty(5)" class = "c2"></td> </tr>
         <tr> <td class = "c1"> 6's </td> <td ID = "t6" onMouseOver= "score(6)" onMouseOut = "empty(6)" class = "c2"></td> 
-            <td class = "c3" rowspan = "5"><button class = "b2">New game</button></td> </tr>
-        <tr> <td class = "c1"> 3 of a kind </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 4 of a kind </td> <td class = "c2"></td> </tr>
-        <tr> <td class = "c1" > Yahtzee </td> <td class = "c2"></td> </tr>
+            <td class = "c3" rowspan = "5"><button onClick = "newGame()" class = "b2">New game</button></td> </tr>
+        <tr> <td class = "c1"> 3 of a kind </td> <td class = "c2" ID = "t7" onMouseOver = "kind(7,3)" onMouseOut = "empty(7)"></td> </tr>
+        <tr> <td class = "c1"> 4 of a kind </td> <td class = "c2" ID = "t8" onMouseOver = "kind(8,4)" onMouseOut = "empty(8)"></td> </tr>
+        <tr> <td class = "c1" > Yahtzee </td> <td class = "c2" ID = "t9" onMouseOver = "kind(9,5)" onMouseOut = "empty(9)"></td> </tr>
         <tr> <td class = "c1"> Total </td> <td class = "c2"></td> </tr>
     </table>
 </body>
