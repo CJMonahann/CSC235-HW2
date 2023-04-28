@@ -15,8 +15,11 @@
         var numArr = new Array(0,0,0,0,0); //records rolled dice values
         var numBool = new Array(false,false,false,false,false) //records boolean status of dice color
                                                                //false = blue, true = purple
+        var tdBool = new Array(false,false,false,false,false,false,false,false,false); //records status of score box onClick status
+                                                                                      //false = not clicked, true = clicked
         var numFreq = new Array(0,0,0,0,0,0,0);
         var numRoll = 0;
+        var gameTotal = 0;
         function roll() {
             if (numRoll < 3) { //allows roll button functionality for only three times
                 numFreq[1]=numFreq[2]=numFreq[3]=numFreq[4]=numFreq[5]=numFreq[6]=0;
@@ -46,27 +49,48 @@
             td.innerHTML = numFreq[n] * n;
         }
         function empty(n) {
-            var td = document.getElementById("t" + n);
-            td.innerHTML = null; //change td from number to null so that box appears empty again
+            if(!tdBool[n]) { //set td to null if it hasn't been clicked on
+                var td = document.getElementById("t" + n);
+                td.innerHTML = null; //change td from number to null so that box appears empty again
+            }
         }
         function kind(n,v) {
             var td = document.getElementById("t" + n);
+            var sum = 0;
             for(var i = 0; i < numFreq.length; i++) {
                 if(numFreq[i] >= v) {
-                    td.innerHTML = numArr[i] * v;
+                    td.innerHTML = numSum();
                 }
             }
+        }
+        function numSum() {
+            var total = 0;
+            for(var i = 0; i < numArr.length; i++) {total += numArr[i]}
+            return total;
+        }
+        function clicked(n) {
+            tdBool[n] = true; //set to true instead of inverse so that it can't be undone during current game
+            var td = document.getElementById("t" + n);
+            var totalBox = document.getElementById("t10");
+            gameTotal += parseInt(td.innerHTML);
+            totalBox.innerHTML = gameTotal;
         }
         function newGame() {
             //reset all global variables for the game
             numArr = [0,0,0,0,0];
             numBool = [false,false,false,false,false];
+            tdBool = [false,false,false,false,false,false,false,false,false];
             numFreq = [0,0,0,0,0,0,0];
             numRoll = 0;
-            //return all dice images to original image
+            gameTotal = 0;
+            //return all dice images and td states to original
             for(var i = 0; i <= 4; i++) {
                 var dice = document.getElementById("d" + i);
                 dice.src = "pix/dice0.gif";
+            }
+            for(var j = 1; j <= 10; j++) {
+                var td = document.getElementById("t" + j);
+                td.innerHTML = null;
             }
         }
     //-->
@@ -80,18 +104,18 @@
         <img id = "d4" onClick = "block(4)" src = "pix\dice0.gif" alt = "dice 0">
     </div>
     <table>
-        <tr> <td class = "c1"> 1's </td> <td ID = "t1" onMouseOver= "score(1)" onMouseOut = "empty(1)" class = "c2"></td> 
+        <tr> <td class = "c1"> 1's </td> <td ID = "t1" onMouseOver= "score(1)" onMouseOut = "empty(1)" onClick= "clicked(1)" class = "c2"></td> 
             <td class = "c3" rowspan = "5"><button onClick = "roll()" class = "b1">Roll</button></td> </tr>
-        <tr> <td class = "c1"> 2's </td> <td ID = "t2" onMouseOver= "score(2)" onMouseOut = "empty(2)" class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 3's </td> <td ID = "t3" onMouseOver= "score(3)" onMouseOut = "empty(3)" class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 4's </td> <td ID = "t4" onMouseOver= "score(4)" onMouseOut = "empty(4)" class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 5's </td> <td ID = "t5" onMouseOver= "score(5)" onMouseOut = "empty(5)" class = "c2"></td> </tr>
-        <tr> <td class = "c1"> 6's </td> <td ID = "t6" onMouseOver= "score(6)" onMouseOut = "empty(6)" class = "c2"></td> 
+        <tr> <td class = "c1"> 2's </td> <td ID = "t2" onMouseOver= "score(2)" onMouseOut = "empty(2)" onClick = "clicked(2)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 3's </td> <td ID = "t3" onMouseOver= "score(3)" onMouseOut = "empty(3)" onClick = "clicked(3)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 4's </td> <td ID = "t4" onMouseOver= "score(4)" onMouseOut = "empty(4)" onClick = "clicked(4)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 5's </td> <td ID = "t5" onMouseOver= "score(5)" onMouseOut = "empty(5)" onClick = "clicked(5)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 6's </td> <td ID = "t6" onMouseOver= "score(6)" onMouseOut = "empty(6)" onClick = "clicked(6)" class = "c2"></td> 
             <td class = "c3" rowspan = "5"><button onClick = "newGame()" class = "b2">New game</button></td> </tr>
-        <tr> <td class = "c1"> 3 of a kind </td> <td class = "c2" ID = "t7" onMouseOver = "kind(7,3)" onMouseOut = "empty(7)"></td> </tr>
-        <tr> <td class = "c1"> 4 of a kind </td> <td class = "c2" ID = "t8" onMouseOver = "kind(8,4)" onMouseOut = "empty(8)"></td> </tr>
-        <tr> <td class = "c1" > Yahtzee </td> <td class = "c2" ID = "t9" onMouseOver = "kind(9,5)" onMouseOut = "empty(9)"></td> </tr>
-        <tr> <td class = "c1"> Total </td> <td class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 3 of a kind </td> <td  ID = "t7" onMouseOver = "kind(7,3)" onMouseOut = "empty(7)" onClick = "clicked(7)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> 4 of a kind </td> <td  ID = "t8" onMouseOver = "kind(8,4)" onMouseOut = "empty(8)" onClick = "clicked(8)" class = "c2"></td> </tr>
+        <tr> <td class = "c1" > Yahtzee </td> <td ID = "t9" onMouseOver = "kind(9,5)" onMouseOut = "empty(9)" onClick = "clicked(9)" class = "c2"></td> </tr>
+        <tr> <td class = "c1"> Total </td> <td ID = "t10" class = "c2"></td> </tr>
     </table>
 </body>
 </html>
