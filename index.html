@@ -57,11 +57,14 @@
             }
         }
         function kind(n,v) {
-            var td = document.getElementById("t" + n);
-            var sum = 0;
-            for(var i = 0; i < numFreq.length; i++) {
-                if(numFreq[i] >= v) {
-                    td.innerHTML = numSum();
+            if(!tdBool[n]) {
+                var td = document.getElementById("t" + n);
+                td.innerHTML = 0;
+                for(var i = 0; i < numFreq.length; i++) {
+                    if(numFreq[i] >= v) {
+                        td.innerHTML = numSum();
+                        break;
+                    }
                 }
             }
         }
@@ -72,7 +75,7 @@
         }
         function clicked(n) {
             var td = document.getElementById("t" + n);
-            if(!isNaN(parseInt(td.innerHTML)) && !tdBool[n]) { //if string parsed != NaN and not already clicked
+            if(!tdBool[n]) { //if not already clicked
                 tdBool[n] = true; //set clicked status to true
                 var totalBox = document.getElementById("t10");
                 gameTotal += parseInt(td.innerHTML);
