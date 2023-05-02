@@ -21,7 +21,7 @@
         var numRoll = 0;
         var gameTotal = 0;
         function roll() {
-            if (numRoll < 3) { //allows roll button functionality for only three times
+            if (numRoll < 3) { //allows roll button functionality only three times
                 numFreq[1]=numFreq[2]=numFreq[3]=numFreq[4]=numFreq[5]=numFreq[6]=0;
                 for(var i = 0; i < 5; i++) {
                     if(!numBool[i]) { //when image not purple status, dice can be rolled
@@ -45,8 +45,10 @@
             }
         }
         function score(n) {
-            var td = document.getElementById("t" + n);
-            td.innerHTML = numFreq[n] * n;
+            if(!tdBool[n]) { //if the td hasn't been clicked, update with score on hover
+                var td = document.getElementById("t" + n);
+                td.innerHTML = numFreq[n] * n;
+            }
         }
         function empty(n) {
             if(!tdBool[n]) { //set td to null if it hasn't been clicked on
@@ -69,11 +71,13 @@
             return total;
         }
         function clicked(n) {
-            tdBool[n] = true; //set to true instead of inverse so that it can't be undone during current game
             var td = document.getElementById("t" + n);
-            var totalBox = document.getElementById("t10");
-            gameTotal += parseInt(td.innerHTML);
-            totalBox.innerHTML = gameTotal;
+            if(!isNaN(parseInt(td.innerHTML)) && !tdBool[n]) { //if string parsed != NaN and not already clicked
+                tdBool[n] = true; //set clicked status to true
+                var totalBox = document.getElementById("t10");
+                gameTotal += parseInt(td.innerHTML);
+                totalBox.innerHTML = gameTotal;
+            }
         }
         function newGame() {
             //reset all global variables for the game
